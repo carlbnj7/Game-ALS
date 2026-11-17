@@ -4,7 +4,7 @@ $needPw = (bool)$u['must_change'];
 $needPin = !$u['setup_done'] || $u['pin_hash'] === null;
 if (!$needPw && !$needPin) redirect('home');
 $err = '';
-$oldUn = preg_match('/^(ALS|TCH|ADM)\d/i', $u['username']) ? '' : $u['username'];
+$oldUn = preg_match('/^(ALST|ALS|ADM|TCH)\d/i', $u['username']) ? '' : $u['username'];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $un = strtolower(trim((string)($_POST['username'] ?? '')));
     $cur = (string)($_POST['current'] ?? ''); $n1 = (string)($_POST['new1'] ?? ''); $n2 = (string)($_POST['new2'] ?? '');

@@ -56,3 +56,9 @@ document.addEventListener('click', function (e) {
 document.addEventListener('keydown', function (e) { if (e.key === 'Escape') document.body.classList.remove('menu-open'); });
 // A select marked data-autosave sends its form as soon as it changes.
 document.addEventListener('change', function (e) { if (e.target.matches && e.target.matches('select[data-autosave]')) e.target.form.submit(); });
+// Teachers page: admins manage all districts, so hide the District box when "Admin" is chosen.
+document.addEventListener('DOMContentLoaded', function () {
+  var r = document.querySelector('details.add select[name=role]'), d = document.querySelector('[data-teacher-only]'); if (!r || !d) return;
+  function sync() { d.hidden = r.value === 'admin'; d.querySelector('select').disabled = r.value === 'admin'; }
+  r.addEventListener('change', sync); sync();
+});

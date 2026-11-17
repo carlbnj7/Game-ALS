@@ -186,10 +186,38 @@ function slug(string $s): string {
 }
 const ID_PREFIX = ['learner' => 'ALS', 'teacher' => 'TCH', 'admin' => 'ADM'];
 /** Give a new account its ALS ID (e.g. ALS202600012). The ALS ID is also its first username. */
+/** District number used in learner IDs: "District I" or "District 1" -> 1. Falls back to the district's id. */
+function district_number(?int $did): int {
+    if (!$did) return 0;
+    $n = (string)val('SELECT name FROM districts WHERE id = ?', [$did]);
+    if (preg_match('/(\d+)\s*$/', $n, $m)) return (int)$m[1];
+    if (preg_match('/\b([IVX]+)\s*$/i', $n, $m)) { $r = ['I' => 1, 'V' => 5, 'X' => 10]; $t = 0; $p = 0; foreach (array_reverse(str_split(strtoupper($m[1]))) as $c) { $v = $r[$c]; $t += $v < $p ? -$v : $v; $p = max($p, $v); } return $t; }
+    return $did;
+}
+/** The ID for an account: ALST0001 (teacher), ADM0001 (admin), ALS1260001 (learner: district 1, year 26, number 0001). */
+function next_als_id(string $role, ?int $clc = null): string {
+    if ($role === 'learner') {
+        $d = district_number($clc ? (int)val('SELECT district_id FROM clcs WHERE id = ?', [$clc]) : 0);
+        $pre = 'ALS' . $d . date('y');
+    } else $pre = $role === 'teacher' ? 'ALST' : 'ADM';
+    $max = (int)val('SELECT MAX(CAST(SUBSTRING(als_id, ?) AS UNSIGNED)) FROM users WHERE als_id REGEXP ?', [strlen($pre) + 1, '^' . $pre . '[0-9]{4}$']);
+    return $pre . str_pad((string)($max + 1), 4, '0', STR_PAD_LEFT);
+}
+/** Give a new account its ALS ID. The ALS ID is also its first username. */
 function assign_als_id(int $id, string $role): string {
-    $aid = ID_PREFIX[$role] . date('Y') . str_pad((string)$id, 5, '0', STR_PAD_LEFT);
-    q('UPDATE users SET als_id = ?, username = ? WHERE id = ?', [$aid, $aid, $id]);
-    return $aid;
+    $clc = $role === 'learner' ? (int)val('SELECT clc_id FROM users WHERE id = ?', [$id]) : null;
+    for ($i = 0; $i < 5; $i++) {
+        $aid = next_als_id($role, $clc);
+        try { q('UPDATE users SET als_id = ?, username = IF(setup_done = 1, username, ?) WHERE id = ?', [$aid, $aid, $id]); return $aid; }
+        catch (PDOException $ex) { if ($ex->getCode() !== '23000') throw $ex; }
+    }
+    throw new RuntimeException('Could not make an ALS ID.');
+}
+/** One time: change old IDs (TCH2026…, ALS2026…, ADM2026…) to the short format. */
+function renumber_ids_once(): void {
+    if (setting('id_format') === '2') return;
+    foreach (all("SELECT id, role FROM users WHERE als_id IS NULL OR als_id REGEXP '^(TCH|ALS|ADM)20[0-9]{6,}$' ORDER BY role, id") as $r) assign_als_id((int)$r['id'], $r['role']);
+    q("INSERT INTO settings (k, v) VALUES ('id_format', '2') ON DUPLICATE KEY UPDATE v = '2'");
 }
 /** Add a learner. Returns [ALS ID, starter password]. */
 function add_learner(array $by, array $d): array {
@@ -209,7 +237,7 @@ function add_staff(array $by, string $role, array $d): array {
 /** A user-chosen username: 3–30 letters, numbers, dot, dash or underscore, and not shaped like an ALS ID. */
 function username_problem(string $un, int $self): string {
     if (!preg_match('/^[a-z0-9][a-z0-9._-]{2,29}$/', $un)) return 'Use 3 to 30 small letters, numbers, dot, dash or underscore. Start with a letter or number.';
-    if (preg_match('/^(als|tch|adm)\d/', $un)) return 'That looks like an ALS ID. Pick a different username.';
+    if (preg_match('/^(alst|als|adm|tch)\d/', $un)) return 'That looks like an ALS ID. Pick a different username.';
     if (val('SELECT 1 FROM users WHERE (username = ? OR als_id = ?) AND id <> ?', [$un, $un, $self])) return 'That username is already taken. Try another one.';
     return '';
 }

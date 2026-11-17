@@ -8,7 +8,7 @@
     <label>Middle name<input name="middle_name"></label>
     <label>Last name<input name="last_name" required></label>
     <label>Account type<select name="role"><option value="teacher">Teacher</option><option value="admin">Admin</option></select></label>
-    <label>District<?php $selD = 0; ?><select name="district_id"><option value="0">Choose district</option><?php foreach ($dists as $d): ?><option value="<?= (int)$d['id'] ?>"<?= isset($selD) && (int)$selD === (int)$d['id'] ? ' selected' : '' ?>><?= e($d['name'] . ' · ' . $d['municipality']) ?></option><?php endforeach; ?></select></label>
+    <label data-teacher-only>District<?php $selD = 0; ?><select name="district_id"><option value="0">Choose district</option><?php foreach ($dists as $d): ?><option value="<?= (int)$d['id'] ?>"<?= isset($selD) && (int)$selD === (int)$d['id'] ? ' selected' : '' ?>><?= e($d['name'] . ' · ' . $d['municipality']) ?></option><?php endforeach; ?></select></label>
     <label>Email (optional)<input type="email" name="email"></label>
     <p class="muted small id-note"><?= icon('key', 14) ?> ALS ID and password are made for you.</p>
     <fieldset class="span2"><legend>CLCs they handle (teachers)</legend><div class="checks"><?php foreach ($clcs as $c): ?><label class="ck"><input type="checkbox" name="clcs[]" value="<?= (int)$c['id'] ?>"> <?= e($c['name']) ?></label><?php endforeach; ?><?= !$clcs ? '<span class="muted small">Add CLCs first on the CLCs page.</span>' : '' ?></div></fieldset>
@@ -27,7 +27,7 @@
 <tr class="<?= $t['active'] ? '' : 'off' ?>">
   <td><b><?= e(full_name($t)) ?></b> <span class="pill <?= $t['role'] === 'admin' ? 'pill-admin' : '' ?>"><?= e(ucfirst($t['role'])) ?></span><?= $t['active'] ? '' : ' <span class="pill">Turned off</span>' ?></td>
   <td><code><?= e($t['als_id']) ?></code>
-    <form method="post" class="dist-form"><?= csrf_field() ?><input type="hidden" name="do" value="district"><input type="hidden" name="id" value="<?= (int)$t['id'] ?>"><?php $selD = $t['district_id']; ?><select name="district_id" aria-label="District" data-autosave><option value="0">Choose district</option><?php foreach ($dists as $d): ?><option value="<?= (int)$d['id'] ?>"<?= isset($selD) && (int)$selD === (int)$d['id'] ? ' selected' : '' ?>><?= e($d['name'] . ' · ' . $d['municipality']) ?></option><?php endforeach; ?></select></form><br><small class="muted"><?= $t['setup_done'] ? e($t['username']) : 'Not set up yet' ?></small></td>
+    <?php if ($t['role'] === 'teacher'): ?>    <form method="post" class="dist-form"><?= csrf_field() ?><input type="hidden" name="do" value="district"><input type="hidden" name="id" value="<?= (int)$t['id'] ?>"><?php $selD = $t['district_id']; ?><select name="district_id" aria-label="District" data-autosave><option value="0">Choose district</option><?php foreach ($dists as $d): ?><option value="<?= (int)$d['id'] ?>"<?= isset($selD) && (int)$selD === (int)$d['id'] ? ' selected' : '' ?>><?= e($d['name'] . ' · ' . $d['municipality']) ?></option><?php endforeach; ?></select></form><?php else: ?><span class="muted small">All districts</span><?php endif; ?><br><small class="muted"><?= $t['setup_done'] ? e($t['username']) : 'Not set up yet' ?></small></td>
   <td>
     <?php if ($t['role'] === 'teacher'): ?>
     <details class="inline"><summary><?= $ids ? e(implode(', ', array_map(fn($i) => $cn[$i] ?? '?', $ids))) : '<span class="muted">None</span>' ?></summary>

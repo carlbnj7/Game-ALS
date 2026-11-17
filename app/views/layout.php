@@ -20,7 +20,7 @@ $cur = $_GET['p'] ?? 'home';
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="apple-mobile-web-app-title" content="Game ALS">
 <link rel="stylesheet" href="assets/css/app.css?v=17">
-<script src="assets/js/theme.js?v=5"></script>
+<script src="assets/js/theme.js?v=7"></script>
 </head>
 <body class="<?= e($bodyClass ?? '') ?>" data-csrf="<?= e($_SESSION['csrf'] ?? '') ?>">
 <?php if ($bare): require $view_file; else: ?>
