@@ -7,6 +7,7 @@
       <span class="dep-badge"><img src="assets/img/als-logo.png" alt="DepEd ALS logo"><img src="assets/img/division.webp" alt="Division of Bukidnon logo"><span>DepEd ALS<br><small><?= e(setting('division_name', 'Division of Bukidnon')) ?></small></span></span>
       <button type="button" class="seg-toggle" data-theme-toggle aria-label="Switch light or dark"><span class="s-sun"><?= icon('sun', 15) ?></span><span class="s-moon"><?= icon('moon', 14) ?></span></button>
     </div>
+    <div class="hero-mid">
     <div class="hero-brand">
       <img class="hero-logo" src="assets/img/logo-ribbon.svg" alt="Game ALS logo" width="132" height="143">
       <div class="wordmark"><b>Game <span class="als">ALS</span></b><small class="wm-full"><?= e(APP_FULL_NAME) ?></small></div>
@@ -14,10 +15,8 @@
     <h2 class="hero-h">Master every <em>strand.</em></h2>
     <p class="hero-p">Seven Learning Strands. Three levels each. Answer, level up, and earn your Certificate of Readiness.</p>
     <div class="strand-chips"><?= $chips ?></div>
-    <svg class="hero-art" viewBox="0 0 560 300" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
-      <path d="M0 210C120 170 230 190 330 160S500 110 560 100V300H0z" class="h-green"/>
-      <path d="M0 250C140 222 260 238 380 214S520 180 560 176V300H0z" class="h-red"/>
-    </svg>
+    </div>
+    <img class="hero-mtn" src="assets/img/panel-mountains.svg?v=2" alt="" aria-hidden="true">
   </section>
   <section class="auth-sheet">
     <div class="grab"></div>
