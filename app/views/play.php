@@ -1,4 +1,4 @@
-<div class="play" id="play" data-s="<?= e($s) ?>" data-l="<?= (int)$l ?>" data-a="<?= (int)$a ?>" data-api="<?= e(url('api')) ?>" data-back="<?= e(url('strand', ['s' => $s])) ?>">
+<div class="play" id="play" data-s="<?= e($s) ?>" data-l="<?= (int)$l ?>" data-a="<?= (int)$a ?>" data-api="<?= e(url('api')) ?>" data-secs="<?= (int)setting('item_seconds', '60') ?>" data-back="<?= e(url('strand', ['s' => $s])) ?>">
   <header class="play-top">
     <div class="pt-row">
       <a class="icon-btn" href="<?= url('strand', ['s' => $s]) ?>" aria-label="Leave activity" id="leave"><?= icon('x', 18) ?></a>

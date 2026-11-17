@@ -40,7 +40,8 @@ if ($do === 'hint') {
 
 if ($do === 'answer') {
     $choice = strtoupper((string)($in['choice'] ?? ''));
-    if (!in_array($choice, ['A', 'B', 'C', 'D'], true)) { db()->rollBack(); out(['error' => 'Pick an answer first.'], 400); }
+    $timedOut = $choice === 'T' && (int)setting('item_seconds', '60') > 0;
+    if (!$timedOut && !in_array($choice, ['A', 'B', 'C', 'D'], true)) { db()->rollBack(); out(['error' => 'Pick an answer first.'], 400); }
     $ok = $choice === $it['answer'];
     $lives = (int)$at['lives']; $streak = (int)$at['streak']; $gained = false;
     if ($ok) {

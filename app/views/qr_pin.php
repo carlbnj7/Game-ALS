@@ -18,7 +18,9 @@
       <?= csrf_field() ?><input type="hidden" name="t" value="<?= e($t) ?>">
       <?php if ($usePin): ?>
         <label for="code">Type your 4-digit PIN</label>
-        <input id="code" class="pin-big" type="password" name="code" required inputmode="numeric" pattern="\d{4}" minlength="4" maxlength="4" autofocus autocomplete="off" data-autosubmit>
+        <input id="code" class="pin-big" type="password" name="code" required inputmode="numeric" pattern="\d{4}" minlength="4" maxlength="4" autofocus autocomplete="off" data-pin data-autosubmit title="4 numbers">
+        <div class="pin-dots" aria-hidden="true" data-pin-dots><i></i><i></i><i></i><i></i></div>
+        <div class="keypad" data-keypad="code"><?php foreach ([1, 2, 3, 4, 5, 6, 7, 8, 9] as $n): ?><button type="button" data-k="<?= $n ?>"><?= $n ?></button><?php endforeach; ?><button type="button" data-k="clear" class="kp-soft">Clear</button><button type="button" data-k="0">0</button><button type="button" data-k="back" class="kp-soft" aria-label="Delete"><?= icon('back', 20) ?></button></div>
       <?php else: ?>
         <label for="code">First time? Type the password on your slip</label>
         <div class="field"><?= icon('key', 18) ?><input id="code" type="password" name="code" required autofocus autocomplete="current-password"></div>
@@ -30,4 +32,4 @@
   <?php endif; ?>
   </div>
 </div>
-<script src="assets/js/auth.js?v=3"></script>
+<script src="assets/js/auth.js?v=4"></script>

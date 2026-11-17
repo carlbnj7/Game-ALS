@@ -11,4 +11,4 @@
     <a class="linkish small" href="<?= url('login') ?>">Sign in with username and password</a>
   </div>
 </div>
-<script src="assets/js/auth.js?v=3"></script>
+<script src="assets/js/auth.js?v=4"></script>

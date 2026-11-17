@@ -22,8 +22,8 @@
     <fieldset class="step"><legend><span><?= $needPw ? 3 : 2 ?></span> Your 4-digit PIN</legend>
       <p class="muted small">You type this PIN after you scan your QR pass.</p>
       <div class="grid2">
-        <label>PIN<input class="pin-in" type="password" name="pin1" required inputmode="numeric" pattern="\d{4}" minlength="4" maxlength="4" autocomplete="off"></label>
-        <label>Type it again<input class="pin-in" type="password" name="pin2" required inputmode="numeric" pattern="\d{4}" minlength="4" maxlength="4" autocomplete="off"></label>
+        <label>PIN<input class="pin-in" type="password" data-pin title="4 numbers" name="pin1" required inputmode="numeric" pattern="\d{4}" minlength="4" maxlength="4" autocomplete="off"></label>
+        <label>Type it again<input class="pin-in" type="password" data-pin title="4 numbers" name="pin2" required inputmode="numeric" pattern="\d{4}" minlength="4" maxlength="4" autocomplete="off"></label>
       </div>
     </fieldset>
     <?php endif; ?>

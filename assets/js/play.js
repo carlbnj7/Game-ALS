@@ -105,7 +105,7 @@
       o.appendChild(b);
     });
     $('checkBtn').disabled = true; $('checkBtn').textContent = 'Check answer';
-    drawTop();
+    drawTop(); startTimer();
     $('body').scrollTop = 0; window.scrollTo(0, 0);
   }
 
@@ -133,8 +133,19 @@
     });
   }
 
+  // Timer for each question (set by the admin; 0 = no timer).
+  var secs = parseInt(root.dataset.secs || '0', 10), left = 0, tick = null, tbox = null;
+  function stopTimer() { if (tick) { clearInterval(tick); tick = null; } }
+  function startTimer() {
+    stopTimer(); if (!secs) return;
+    if (!tbox) { tbox = el('div', 'qtimer'); tbox.appendChild(el('span', 'qt-bar')); tbox.appendChild(el('b', 'qt-n')); $('qcard').insertBefore(tbox, $('qcard').firstChild); }
+    left = secs; draw();
+    tick = setInterval(function () { left--; draw(); if (left <= 0) { stopTimer(); if (!answered && !busy) { pick = 'T'; check(); } } }, 1000);
+  }
+  function draw() { tbox.querySelector('.qt-n').textContent = Math.floor(left / 60) + ':' + ('0' + left % 60).slice(-2); var r = Math.round(100 * left / secs / 5) * 5; tbox.className = 'qtimer p' + r + (left <= 10 ? ' low' : ''); }
   function check() {
     if (!pick || busy || answered) return;
+    if (pick !== 'T') stopTimer();
     busy = true; $('checkBtn').disabled = true; $('checkBtn').textContent = 'Checking…';
     api({ do: 'answer', pos: st.pos, choice: pick }).then(function (r) {
       busy = false;

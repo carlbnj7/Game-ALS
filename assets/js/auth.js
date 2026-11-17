@@ -4,12 +4,23 @@ document.addEventListener('click', function (e) {
   var show = i.type === 'password'; i.type = show ? 'text' : 'password'; b.textContent = show ? 'Hide' : 'Show';
 });
 
-// QR pass: send the PIN as soon as 4 numbers are typed.
+// QR pass: numbers only, dots fill up, and the PIN is sent as soon as 4 numbers are in.
 document.querySelectorAll('[data-autosubmit]').forEach(function (i) {
-  i.addEventListener('input', function () {
+  var dots = document.querySelectorAll('[data-pin-dots] i'), sent = false;
+  function sync() {
     i.value = i.value.replace(/\D/g, '').slice(0, 4);
-    if (i.value.length === 4 && i.form) i.form.requestSubmit ? i.form.requestSubmit() : i.form.submit();
+    for (var k = 0; k < dots.length; k++) dots[k].classList.toggle('on', k < i.value.length);
+    if (i.value.length === 4 && i.form && !sent) { sent = true; i.form.requestSubmit ? i.form.requestSubmit() : i.form.submit(); }
+  }
+  i.addEventListener('input', sync);
+  var pad = document.querySelector('[data-keypad="' + i.id + '"]');
+  if (pad) pad.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-k]'); if (!b || sent) return;
+    var k = b.getAttribute('data-k');
+    if (k === 'clear') i.value = ''; else if (k === 'back') i.value = i.value.slice(0, -1); else if (i.value.length < 4) i.value += k;
+    sync();
   });
+  sync();
 });
 
 // Scan a QR pass with this device's camera (works where the browser can read QR codes).

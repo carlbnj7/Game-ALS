@@ -9,6 +9,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($d['first_name'] === '' || $d['last_name'] === '') flash('Type the first and last name.', 'err');
         else {
             [$tid, $aid, $pw] = add_staff($me, $role, $d);
+            $dist = (int)($_POST['district_id'] ?? 0);
+            if ($dist && val('SELECT 1 FROM districts WHERE id = ?', [$dist])) q('UPDATE users SET district_id = ? WHERE id = ?', [$dist, $tid]);
             if ($role === 'teacher') foreach ((array)($_POST['clcs'] ?? []) as $c) q('INSERT IGNORE INTO teacher_clc VALUES (?, ?)', [$tid, (int)$c]);
             $_SESSION['shown_pw'] = [full_name($d), $aid, $pw, $role];
             flash(($role === 'admin' ? 'Admin' : 'Teacher') . ' account made. Give them the ALS ID and password below.');
@@ -22,6 +24,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             q('DELETE FROM teacher_clc WHERE teacher_id = ?', [$t['id']]);
             foreach ((array)($_POST['clcs'] ?? []) as $c) q('INSERT IGNORE INTO teacher_clc VALUES (?, ?)', [$t['id'], (int)$c]);
             flash('CLCs updated for ' . full_name($t) . '.');
+        } elseif ($do === 'district') {
+            $dist = (int)($_POST['district_id'] ?? 0);
+            q('UPDATE users SET district_id = ? WHERE id = ?', [$dist && val('SELECT 1 FROM districts WHERE id = ?', [$dist]) ? $dist : null, $t['id']]);
+            flash('District saved for ' . full_name($t) . '.');
         } elseif ($do === 'reset' && !$self) {
             $pw = make_password();
             q('UPDATE users SET password_hash = ?, must_change = 1, pin_fails = 0 WHERE id = ?', [password_hash($pw, PASSWORD_DEFAULT), $t['id']]);
@@ -42,7 +48,9 @@ $f = place_filter() + ['role' => in_array($_GET['role'] ?? '', ['teacher', 'admi
 $where = ['u.role IN ("teacher", "admin")']; $args = [];
 if ($f['role']) { $where[] = 'u.role = ?'; $args[] = $f['role']; }
 $w2 = []; $a2 = []; place_where($f, $w2, $a2, 'c');
+if (!empty($f['dist'])) { $where[] = '(u.district_id = ? OR u.id IN (SELECT t.teacher_id FROM teacher_clc t JOIN clcs c ON c.id = t.clc_id WHERE c.district_id = ?))'; array_push($args, $f['dist'], $f['dist']); $w2 = []; }
+elseif (!empty($f['mun'])) { $where[] = '(u.district_id IN (SELECT id FROM districts WHERE municipality_id = ?) OR u.id IN (SELECT t.teacher_id FROM teacher_clc t JOIN clcs c ON c.id = t.clc_id JOIN districts d ON d.id = c.district_id WHERE d.municipality_id = ?))'; array_push($args, $f['mun'], $f['mun']); $w2 = []; }
 if ($w2) { $where[] = 'u.id IN (SELECT t.teacher_id FROM teacher_clc t JOIN clcs c ON c.id = t.clc_id WHERE ' . implode(' AND ', $w2) . ')'; $args = array_merge($args, $a2); }
-$teachers = all('SELECT u.*, (SELECT GROUP_CONCAT(clc_id) FROM teacher_clc WHERE teacher_id = u.id) clc_ids FROM users u WHERE ' . implode(' AND ', $where) . ' ORDER BY u.role DESC, u.active DESC, u.last_name, u.first_name', $args);
+$teachers = all('SELECT u.*, (SELECT GROUP_CONCAT(clc_id) FROM teacher_clc WHERE teacher_id = u.id) clc_ids, (SELECT CONCAT(d.name, " · ", m.name) FROM districts d JOIN municipalities m ON m.id = d.municipality_id WHERE d.id = u.district_id) district FROM users u WHERE ' . implode(' AND ', $where) . ' ORDER BY u.role DESC, u.active DESC, u.last_name, u.first_name', $args);
 render('teachers', ['title' => 'Teachers and admins', 'teachers' => $teachers, 'clcs' => all('SELECT * FROM clcs ORDER BY name'), 'shown' => $shown, 'me' => $me,
   'f' => $f, 'muns' => municipalities(), 'dists' => districts(), 'scripts' => ['places.js']]);

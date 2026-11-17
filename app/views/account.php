@@ -11,6 +11,8 @@
     <?php endif; ?>
     <dt>Last sign-in</dt><dd><?= $u['last_login'] ? e(date('M j, Y g:i A', strtotime($u['last_login']))) : '—' ?></dd>
   </dl>
+  <button type="button" class="btn install-btn" data-install hidden><?= icon('download', 16) ?> Install Game ALS on this device</button>
+  <p class="install-ios" data-install-ios hidden>On iPhone or iPad: tap <b>Share</b> at the bottom of Safari, then <b>Add to Home Screen</b>.</p>
   <div class="row-btns">
     <a class="btn" href="<?= url('password') ?>"><?= icon('key', 16) ?> Change password</a>
     <a class="btn" href="<?= url('pin') ?>"><?= icon('pin', 16) ?> Username and PIN</a>
