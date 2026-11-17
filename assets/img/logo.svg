@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 130"><defs>
+<linearGradient id="shm" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4248b3"/><stop offset=".55" stop-color="#2a2e7c"/><stop offset="1" stop-color="#171a4f"/></linearGradient>
+<linearGradient id="rimm" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe082"/><stop offset=".5" stop-color="#f5b301"/><stop offset="1" stop-color="#c98a00"/></linearGradient>
+<linearGradient id="pgLm" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e9ebfa"/></linearGradient>
+<linearGradient id="pgRm" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#dfe2f6"/></linearGradient>
+<linearGradient id="plm" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff5a5f"/><stop offset="1" stop-color="#c8232c"/></linearGradient>
+<radialGradient id="glm" cx=".5" cy=".3" r=".6"><stop offset="0" stop-color="rgba(255,255,255,.28)"/><stop offset="1" stop-color="rgba(255,255,255,0)"/></radialGradient>
+<radialGradient id="dgm" cx=".35" cy=".3" r=".7"><stop offset="0" stop-color="#7fe08a"/><stop offset="1" stop-color="#2e7d32"/></radialGradient>
+<radialGradient id="dnm" cx=".35" cy=".3" r=".7"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#cfd3f5"/></radialGradient>
+<radialGradient id="drm" cx=".35" cy=".3" r=".7"><stop offset="0" stop-color="#ff8a8f"/><stop offset="1" stop-color="#c8232c"/></radialGradient></defs>
+<!-- gold rim -->
+<path d="M60 4l50 15v37c0 34-22 56-50 68C32 112 10 90 10 56V19z" fill="url(#rimm)"/>
+<!-- navy body -->
+<path d="M60 10l44 13v33c0 30-19 50-44 61C35 106 16 86 16 56V23z" fill="url(#shm)"/>
+<path d="M60 10l44 13v33c0 10-2 19-6 27C80 70 50 48 16 46V23z" fill="url(#glm)"/>
+<!-- ALS dots -->
+<circle cx="43" cy="30" r="6.5" fill="url(#dgm)"/><circle cx="60" cy="26.5" r="6.5" fill="url(#dnm)"/><circle cx="77" cy="30" r="6.5" fill="url(#drm)"/>
+<!-- book shadow + pages -->
+<path d="M24 52c12-6 25-6 36 2 11-8 24-8 36-2v42c-12-6-25-6-36 2-11-8-24-8-36-2z" fill="rgba(0,0,0,.25)" transform="translate(0 3)"/>
+<path d="M24 50c12-6 25-6 36 2v42c-11-8-24-8-36-2z" fill="url(#pgLm)"/>
+<path d="M96 50c-12-6-25-6-36 2v42c11-8 24-8 36-2z" fill="url(#pgRm)"/>
+<path d="M30 60c8-3 15-3 22 0M30 68c8-3 15-3 22 0M30 76c8-3 15-3 22 0" stroke="#c9cdee" stroke-width="2" fill="none" stroke-linecap="round"/>
+<path d="M60 52v42" stroke="#b9bee8" stroke-width="1.6"/>
+<!-- play button on right page -->
+<circle cx="78" cy="71" r="13" fill="url(#plm)"/><path d="M74 64v14l11-7z" fill="#fff"/>
+<!-- sparkle -->
+<path d="M100 8l2.2 5.2L107.5 15l-5.3 2-2.2 5.2-2.2-5.2-5.3-2 5.3-1.8z" fill="#ffd54f"/>
+
+</svg>

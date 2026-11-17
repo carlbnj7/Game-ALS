@@ -1,0 +1,134 @@
+Strand,Level,Item,What I did,Why
+LS1-EN,1,37,fixed,"B was also an opinion (""I think...""); changed B to a fact so only D is the opinion"
+LS1-EN,1,47,hidden,bandwagon (C) fits better than the key (testimonial); two answers possible
+LS1-EN,2,31,hidden,A and C are both correct (both say the point is weak because of cost)
+LS1-EN,2,38,fixed,answer table at the back says A; the item and its explanation say C (argument from authority)
+LS1-EN,2,75,fixed,answer table says C; C is wrong (an event cannot go on without permission)
+LS1-EN,3,32,hidden,none of the choices is evidence for equality; the key (B) is about mornings
+LS1-EN,3,42,fixed,emoji symbols could not be read; removed them from the question
+LS1-FIL,1,46,hidden,"needs the picture (letterhead, logo or poster) from the module"
+LS1-FIL,1,48,fixed,"key said C (logo); contact information (A) is the way to contact, as the explanation says"
+LS1-FIL,1,59,hidden,"needs the picture (letterhead, logo or poster) from the module"
+LS1-FIL,1,60,hidden,"needs the picture (letterhead, logo or poster) from the module"
+LS1-FIL,1,61,hidden,"needs the picture (letterhead, logo or poster) from the module"
+LS1-FIL,1,62,hidden,"needs the picture (letterhead, logo or poster) from the module"
+LS1-FIL,1,63,hidden,"needs the picture (letterhead, logo or poster) from the module"
+LS1-FIL,2,29,fixed,"key said B; the explanation supports A (wanted the bird, praise, and the inheritance)"
+LS1-FIL,2,44,hidden,"needs the picture (letterhead, logo or poster) from the module"
+LS1-FIL,2,50,hidden,same question as 2.49
+LS1-FIL,2,59,hidden,"needs the picture (letterhead, logo or poster) from the module"
+LS1-FIL,2,60,hidden,"needs the picture (letterhead, logo or poster) from the module"
+LS1-FIL,2,61,hidden,"needs the picture (letterhead, logo or poster) from the module"
+LS1-FIL,2,62,hidden,"needs the picture (letterhead, logo or poster) from the module"
+LS1-FIL,2,63,hidden,"needs the picture (letterhead, logo or poster) from the module"
+LS1-FIL,3,42,hidden,"needs the picture (letterhead, logo or poster) from the module"
+LS1-FIL,3,43,hidden,"needs the picture (letterhead, logo or poster) from the module"
+LS1-FIL,3,44,hidden,"needs the picture (letterhead, logo or poster) from the module"
+LS1-FIL,3,49,hidden,same question as 3.48
+LS2,1,16,fixed,"key said D; the swing at rest has balanced forces (A), as the explanation says"
+LS2,1,21,fixed,choice B was also true; reworded B so only C is correct
+LS2,1,22,fixed,the module had only 3 choices; added a wrong choice D
+LS2,1,24,fixed,"key said C; only D gives the correct properties of solid, liquid and gas"
+LS2,1,46,hidden,same question as 1.45
+LS2,1,68,fixed,text corrected
+LS2,1,73,fixed,"key said D; density is the reason (C), as the explanation says"
+LS2,1,75,fixed,text corrected
+LS2,2,6,hidden,"needs the particle pictures M, N, O"
+LS2,2,33,fixed,key said B; TT and Tt are both tall (C)
+LS2,2,66,fixed,key said A; C is the correct path of electricity
+LS2,3,12,fixed,key said B; the explanation describes D (tri-)
+LS2,3,16,hidden,same question as 3.15
+LS3,1,6,fixed,typed from the module page (math symbols)
+LS3,1,8,fixed,typed from the module page (math symbols)
+LS3,1,9,fixed,typed from the module page (math symbols)
+LS3,1,11,fixed,typed from the module page (math symbols)
+LS3,1,18,fixed,typed from the module page (math symbols)
+LS3,1,25,fixed,"the module printed 8a⁵, which is wrong; corrected to 8a⁶"
+LS3,1,26,fixed,typed from the module page (math symbols)
+LS3,1,27,fixed,typed from the module page (math symbols)
+LS3,1,38,hidden,needs the grid map picture
+LS3,1,51,fixed,key said B (113.04); the formula gives 56.52 (A)
+LS3,1,58,fixed,typed from the module page (math symbols)
+LS3,1,59,fixed,typed from the module page (math symbols)
+LS3,1,60,hidden,trigonometry symbols could not be read from the PDF
+LS3,1,61,hidden,trigonometry symbols could not be read from the PDF
+LS3,1,62,fixed,answer table says D; B is correct (a tangent is perpendicular to the radius)
+LS3,1,67,fixed,typed from the module page (math symbols)
+LS3,1,69,fixed,key said D; solving gives √13 (B)
+LS3,1,71,fixed,key said A; the mean is the sum divided by the count (C)
+LS3,2,4,fixed,typed from the module page (math symbols)
+LS3,2,8,fixed,typed from the module page (math symbols)
+LS3,2,11,fixed,typed from the module page (math symbols)
+LS3,2,16,fixed,typed from the module page (math symbols)
+LS3,2,17,fixed,typed from the module page (math symbols)
+LS3,2,21,fixed,typed from the module page (math symbols)
+LS3,2,22,fixed,typed from the module page (math symbols)
+LS3,2,23,fixed,typed from the module page (math symbols)
+LS3,2,24,fixed,key said C; multiplying each term gives A
+LS3,2,25,fixed,typed from the module page (math symbols)
+LS3,2,33,fixed,typed from the module page (math symbols)
+LS3,2,35,fixed,typed; symbols were unreadable
+LS3,2,38,hidden,matching item could not be read properly
+LS3,2,47,fixed,no answer in the module; checked by solving
+LS3,2,52,fixed,key said 13.9 m (used cosine wrongly); sine gives 24 m
+LS3,2,53,hidden,none of the choices is correct (1.5 + 20 × tan 40° ≈ 18.3 m)
+LS3,2,54,fixed,the module printed 24.6°; arcsin(2/5) is 23.6°
+LS3,2,57,fixed,no answer in the module; checked by solving
+LS3,2,61,fixed,no answer in the module
+LS3,2,62,fixed,no answer in the module
+LS3,2,63,fixed,no answer in the module; checked by counting
+LS3,2,72,fixed,answer key corrected
+LS3,2,74,hidden,the question part is missing in the module
+LS3,2,75,fixed,typed from the module page (math symbols)
+LS3,3,18,hidden,needs a graph or figure from the module
+LS3,3,21,fixed,answer table at the back does not match; kept the answer checked by solving
+LS3,3,22,fixed,answer table at the back does not match; kept the answer checked by solving
+LS3,3,23,fixed,answer table at the back does not match; kept the answer checked by solving
+LS3,3,24,fixed,answer table at the back does not match; kept the answer checked by solving
+LS3,3,25,fixed,answer table at the back does not match; kept the answer checked by solving
+LS3,3,26,fixed,answer table at the back does not match; kept the answer checked by solving
+LS3,3,27,fixed,answer table at the back does not match; kept the answer checked by solving
+LS3,3,28,fixed,answer table at the back does not match; kept the answer checked by solving
+LS3,3,29,fixed,answer table at the back does not match; kept the answer checked by solving
+LS3,3,30,fixed,"key said C (all real numbers), but x only goes from −4 to 4"
+LS3,3,31,fixed,typed; symbols were unreadable
+LS3,3,32,fixed,typed; symbols were unreadable
+LS3,3,33,hidden,ray symbols could not be read from the PDF
+LS3,3,34,fixed,answer table at the back does not match; kept the answer checked by solving
+LS3,3,35,hidden,needs a graph or figure from the module
+LS3,3,36,fixed,answer table at the back does not match; kept the answer checked by solving
+LS3,3,37,fixed,answer table at the back does not match; kept the answer checked by solving
+LS3,3,38,fixed,answer table at the back does not match; kept the answer checked by solving
+LS3,3,40,fixed,answer table at the back does not match; kept the answer checked by solving
+LS3,3,43,hidden,needs a graph or figure from the module
+LS3,3,48,hidden,needs a graph or figure from the module
+LS3,3,49,hidden,needs a graph or figure from the module
+LS3,3,50,hidden,needs a graph or figure from the module
+LS3,3,51,hidden,needs a graph or figure from the module
+LS3,3,52,hidden,needs a graph or figure from the module
+LS3,3,53,hidden,needs a graph or figure from the module
+LS3,3,54,hidden,needs a graph or figure from the module
+LS3,3,55,hidden,needs a graph or figure from the module
+LS3,3,59,hidden,needs a graph or figure from the module
+LS3,3,60,hidden,needs a graph that is not in the text
+LS3,3,65,hidden,needs a chart that could not be read
+LS3,3,66,fixed,answer table at the back does not match; kept the answer checked by solving
+LS4,1,35,fixed,"choices were labeled A, B, B, D; relabeled"
+LS4,1,38,hidden,"tripping is a physical hazard (A), but the key says electrical (C); two answers possible"
+LS4,1,49,fixed,plan list was read as choices; fixed
+LS4,2,4,fixed,answer table at the back does not match; the item and explanation agree
+LS4,2,5,fixed,answer table at the back does not match; the item and explanation agree
+LS4,2,11,fixed,answer table at the back does not match; the item and explanation agree
+LS4,2,16,fixed,answer key corrected
+LS4,2,43,fixed,answer table at the back does not match; the item and explanation agree
+LS4,2,44,fixed,answer table at the back does not match; the item and explanation agree
+LS4,2,45,fixed,answer table at the back does not match; the item and explanation agree
+LS4,2,47,fixed,answer table at the back does not match; the item and explanation agree
+LS4,2,61,fixed,"key said A (hobbies); B (education, skills, career goals) is correct, as the explanation says"
+LS4,2,71,fixed,"key said C (complex jargon); A is correct, as the explanation says"
+LS4,3,31,fixed,answer key corrected
+LS5,1,56,fixed,answer key corrected
+LS5,3,39,fixed,answer key corrected
+LS5,3,59,fixed,answer key corrected
+LS6,2,62,fixed,the module had a 5th choice (E. All of the above); merged into D
+LS6,3,6,fixed,no answer in the module; B matches the explanation

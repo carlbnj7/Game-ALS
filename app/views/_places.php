@@ -1,0 +1,3 @@
+<?php /* Municipality and district filter. Needs $muns, $dists, $f. places.js hides districts of other municipalities. */ ?>
+<select name="mun" data-mun><option value="0">All municipalities</option><?php foreach ($muns as $m): ?><option value="<?= (int)$m['id'] ?>" <?= $f['mun'] == $m['id'] ? 'selected' : '' ?>><?= e($m['name']) ?></option><?php endforeach; ?></select>
+<select name="dist" data-dist><option value="0">All districts</option><?php foreach ($dists as $d): ?><option value="<?= (int)$d['id'] ?>" data-m="<?= (int)$d['municipality_id'] ?>" <?= $f['dist'] == $d['id'] ? 'selected' : '' ?>><?= e($d['name'] . ' · ' . $d['municipality']) ?></option><?php endforeach; ?></select>

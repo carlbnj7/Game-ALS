@@ -1,0 +1,11 @@
+Options -Indexes
+DirectoryIndex index.php
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule ^(app|config|database)(/|$) - [F,L]
+  RewriteRule ^(README|INSTALL).*$ - [F,L]
+</IfModule>
+<FilesMatch "\.(sql|md|csv|txt|json)$">
+  Require all denied
+</FilesMatch>
+AddType application/manifest+json .webmanifest
