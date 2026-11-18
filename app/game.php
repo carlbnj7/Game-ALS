@@ -36,6 +36,13 @@ function previous_strand(string $s): ?string {
 }
 /** Levels 2 and 3 open only after all of Level 1 is passed (and the strand itself is open). */
 function level_open(array $pm, string $s, int $l): bool { return strand_open($pm, $s) && ($l === 1 || level_done($pm, $s, 1)); }
+/** Inside a level, activities go in order: Activity 2 opens after Activity 1 is passed (75%), Activity 3 after Activity 2.
+ *  An activity with no questions yet does not block the next one. */
+function activity_open(array $pm, string $s, int $l, int $a, string $grade = 'ELEM'): bool {
+    if (!level_open($pm, $s, $l)) return false;
+    for ($b = 1; $b < $a; $b++) if (empty($pm["$s|$l|$b"]['passed']) && activity_items($grade, $s, $l, $b)) return false;
+    return true;
+}
 function strand_done_count(array $pm, string $s): int {
     $n = 0; for ($l = 1; $l <= 3; $l++) for ($a = 1; $a <= 3; $a++) if (!empty($pm["$s|$l|$a"]['passed'])) $n++;
     return $n;

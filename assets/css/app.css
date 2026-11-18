@@ -610,3 +610,13 @@ body.auth{align-items:safe center}
 @media (max-width:900px){.hero-mtn{max-height:none}.hero-mid{padding-bottom:calc(46% + 10px)}}
 @media (max-width:900px){.hero-mid{padding-bottom:calc(58% + 6px)}}
 @media (min-width:600px) and (max-width:900px){.hero-mtn{max-height:240px;object-fit:cover;object-position:50% 0}.hero-mid{padding-bottom:230px}}
+.pass-info .pw-own{font:600 11.5px "Sora",sans-serif;color:#64748b}
+/* profile pictures */
+.av-img{object-fit:cover;padding:0;background:#fff;border:2px solid #fff;box-shadow:0 0 0 1px var(--line)}
+.who-av{display:flex;text-decoration:none}
+.avatar-pick{margin:14px 0;padding:12px 14px;border:1px solid var(--line);border-radius:14px}.avatar-pick summary{cursor:pointer;font-weight:600;display:flex;gap:8px;align-items:center}
+.av-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:12px 0}
+.av-choice{border:2px solid transparent;border-radius:50%;padding:2px;background:none;cursor:pointer;aspect-ratio:1;display:grid;place-items:center;transition:transform .15s}
+.av-choice img{width:100%;height:100%;border-radius:50%}.av-choice:hover{transform:scale(1.06)}.av-choice.on{border-color:var(--brand2);box-shadow:0 0 0 3px var(--chip)}
+.av-upload{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:6px}.av-upload label{cursor:pointer}
+.pass-name{display:flex;align-items:center;gap:8px}.pass-name .av{width:30px;height:30px;font-size:13px}

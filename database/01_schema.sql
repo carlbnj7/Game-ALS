@@ -16,6 +16,8 @@ CREATE TABLE IF NOT EXISTS users (
   als_id VARCHAR(20) NULL UNIQUE,
   username VARCHAR(60) NOT NULL UNIQUE,
   password_hash VARCHAR(255) NOT NULL,
+  starter_pw VARCHAR(40) NULL,
+  avatar VARCHAR(120) NULL,
   pin_hash VARCHAR(255) NULL,
   pin_fails TINYINT NOT NULL DEFAULT 0,
   first_name VARCHAR(80) NOT NULL DEFAULT '',

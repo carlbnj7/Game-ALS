@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             flash('District saved for ' . full_name($t) . '.');
         } elseif ($do === 'reset' && !$self) {
             $pw = make_password();
-            q('UPDATE users SET password_hash = ?, must_change = 1, pin_fails = 0 WHERE id = ?', [password_hash($pw, PASSWORD_DEFAULT), $t['id']]);
+            q('UPDATE users SET password_hash = ?, starter_pw = ?, must_change = 1, pin_fails = 0 WHERE id = ?', [password_hash($pw, PASSWORD_DEFAULT), $pw, $t['id']]);
             $_SESSION['shown_pw'] = [full_name($t), $t['als_id'], $pw, $t['role']];
             flash('New password made for ' . full_name($t) . '.');
         } elseif ($do === 'pin' && !$self) {

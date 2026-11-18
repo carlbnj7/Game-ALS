@@ -18,7 +18,7 @@ if ($u['role'] === 'learner') {
     $scope = 'Whole division';
 }
 if ($u['role'] !== 'learner' && isset(GRADES[$f['grade']])) { $where[] = 'l.grade = ?'; $args[] = $f['grade']; }
-$rows = all('SELECT l.id, l.first_name, l.middle_name, l.last_name, l.grade, c.name clc, c.municipality,
+$rows = all('SELECT l.id, l.avatar, l.first_name, l.middle_name, l.last_name, l.grade, c.name clc, c.municipality,
     COALESCE(SUM(p.best_correct * 10 + p.passed * 50), 0) pts, COALESCE(SUM(p.passed), 0) passed,
     (SELECT COUNT(*) FROM certificates x WHERE x.user_id = l.id) certs
   FROM users l LEFT JOIN clcs c ON c.id = l.clc_id LEFT JOIN progress p ON p.user_id = l.id

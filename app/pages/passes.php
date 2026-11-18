@@ -7,6 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $who = one('SELECT * FROM users WHERE id = ?', [(int)($_POST['id'] ?? 0)]);
     if ($who && ($isAdmin || can_manage_learner($u, $who))) {
         if (($_POST['do'] ?? '') === 'renew') { qr_token((int)$who['id'], true); q('UPDATE users SET pin_fails = 0 WHERE id = ?', [$who['id']]); flash('New QR code made for ' . full_name($who) . '. The old pass no longer works.'); }
+        if (($_POST['do'] ?? '') === 'newpw' && (int)$who['id'] !== (int)$u['id']) { $pw = make_password(); q('UPDATE users SET password_hash = ?, starter_pw = ?, must_change = 1, pin_fails = 0 WHERE id = ?', [password_hash($pw, PASSWORD_DEFAULT), $pw, $who['id']]); flash('New starter password made for ' . full_name($who) . '. It is on their pass now.'); }
         if (($_POST['do'] ?? '') === 'unlock') { q('UPDATE users SET pin_fails = 0 WHERE id = ?', [$who['id']]); flash(full_name($who) . ' can use their pass again.'); }
     }
     redirect('passes', array_intersect_key($_POST, array_flip(['role', 'clc', 'grade', 'mun', 'dist', 'q'])));

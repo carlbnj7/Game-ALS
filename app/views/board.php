@@ -17,7 +17,7 @@
 <?php foreach ($rows as $i => $r): $mine = $u['id'] == $r['id']; ?>
   <li class="<?= $i < 3 ? 'top top' . ($i + 1) : '' ?> <?= $mine ? 'me' : '' ?>">
     <span class="rank"><?= $i + 1 ?></span>
-    <span class="av"><?= e(mb_strtoupper(mb_substr($r['first_name'], 0, 1))) ?></span>
+    <?= avatar_html($r) ?>
     <span class="grow"><b><?= e(full_name($r)) ?><?= $mine ? ' (you)' : '' ?></b><small><?= e(($r['clc'] ?? '') . ($r['municipality'] ? ' · ' . $r['municipality'] : '')) ?> · <?= (int)$r['passed'] ?> passed · <?= (int)$r['certs'] ?> cert<?= $r['certs'] == 1 ? '' : 's' ?></small></span>
     <span class="pts"><?= number_format((int)$r['pts']) ?><small>pts</small></span>
   </li>

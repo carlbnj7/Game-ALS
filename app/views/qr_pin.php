@@ -8,7 +8,7 @@
     <p class="muted">It may be an old pass. Ask your teacher for a new one, or sign in with your username and password.</p>
     <a class="btn primary big" href="<?= url('login') ?>"><span>Go to sign in</span><?= icon('arrow', 18) ?></a>
   <?php else: ?>
-    <span class="av huge"><?= e(mb_strtoupper(mb_substr($who['first_name'], 0, 1))) ?></span>
+    <?= avatar_html($who, 'huge') ?>
     <p class="qr-hi">Hello,</p>
     <h1><?= e(full_name($who)) ?></h1>
     <p class="muted small"><?= e(ucfirst($who['role'])) ?> · <?= e($who['als_id']) ?></p>

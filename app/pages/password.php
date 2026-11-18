@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     elseif ($n1 !== $n2) $err = 'The two new passwords are not the same.';
     elseif ($n1 === $cur) $err = 'Pick a password that is different from the old one.';
     else {
-        q('UPDATE users SET password_hash = ?, must_change = 0 WHERE id = ?', [password_hash($n1, PASSWORD_DEFAULT), $u['id']]);
+        q('UPDATE users SET password_hash = ?, starter_pw = NULL, must_change = 0 WHERE id = ?', [password_hash($n1, PASSWORD_DEFAULT), $u['id']]);
         session_regenerate_id(true);
         flash('Your new password is saved.');
         redirect('home');

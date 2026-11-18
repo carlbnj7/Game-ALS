@@ -27,17 +27,19 @@
       <div class="pass-body">
         <div class="pass-qr" data-qr="<?= e($r['qr_token']) ?>"></div>
         <div class="pass-info">
-          <p class="pass-name"><?= e(full_name($r)) ?></p>
-          <dl><dt>ALS ID</dt><dd><?= e($r['als_id']) ?></dd><?php if ($r['setup_done'] && $r['username'] !== $r['als_id']): ?><dt>Username</dt><dd><?= e($r['username']) ?></dd><?php endif; ?></dl>
+          <p class="pass-name"><?= avatar_html($r) ?><span><?= e(full_name($r)) ?></span></p>
+          <dl><dt>ALS ID</dt><dd><?= e($r['als_id']) ?></dd><?php if ($r['setup_done'] && $r['username'] !== $r['als_id']): ?><dt>Username</dt><dd><?= e($r['username']) ?></dd><?php endif; ?>
+            <dt>Password</dt><dd><?= $r['starter_pw'] ? e($r['starter_pw']) : '<span class="pw-own">Their own</span>' ?></dd></dl>
           <p class="pass-place"><?= e($place) ?></p>
         </div>
       </div>
-      <footer><?= icon('pin', 14) ?> Scan, then type your 4-digit PIN. Keep your PIN secret.</footer>
+      <footer><?= icon('pin', 14) ?> <?= $r['setup_done'] ? 'Scan, then type your 4-digit PIN.' : 'First time: sign in with the ALS ID and password above, then make your own.' ?> Keep it secret.</footer>
     </article>
     <div class="pass-tools noprint">
       <label class="ck"><input type="checkbox" data-pick checked> Print</label>
       <?php if (!$r['setup_done']): ?><span class="pill">Not set up yet</span><?php endif; ?>
       <?php if ($locked): ?><form method="post"><?= csrf_field() ?><input type="hidden" name="do" value="unlock"><input type="hidden" name="id" value="<?= (int)$r['id'] ?>"><?php foreach (['role' => $f['role']] + $keep as $k => $v): ?><input type="hidden" name="<?= e($k) ?>" value="<?= e($v) ?>"><?php endforeach; ?><button class="btn sm"><?= icon('lock', 14) ?> Unlock</button></form><?php endif; ?>
+      <?php if (!$r['starter_pw'] && (int)$r['id'] !== (int)me()['id']): ?><form method="post" data-confirm="Make a new starter password? Their current password will stop working and they set a new one on next sign-in."><?= csrf_field() ?><input type="hidden" name="do" value="newpw"><input type="hidden" name="id" value="<?= (int)$r['id'] ?>"><?php foreach (['role' => $f['role']] + $keep as $k => $v): ?><input type="hidden" name="<?= e($k) ?>" value="<?= e($v) ?>"><?php endforeach; ?><button class="btn sm ghost"><?= icon('key', 14) ?> New password</button></form><?php endif; ?>
       <form method="post" data-confirm="Make a new QR code? The old printed pass will stop working."><?= csrf_field() ?><input type="hidden" name="do" value="renew"><input type="hidden" name="id" value="<?= (int)$r['id'] ?>"><?php foreach (['role' => $f['role']] + $keep as $k => $v): ?><input type="hidden" name="<?= e($k) ?>" value="<?= e($v) ?>"><?php endforeach; ?><button class="btn sm ghost"><?= icon('refresh', 14) ?> New QR</button></form>
     </div>
   </div>

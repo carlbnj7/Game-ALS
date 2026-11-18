@@ -62,3 +62,5 @@ document.addEventListener('DOMContentLoaded', function () {
   function sync() { d.hidden = r.value === 'admin'; d.querySelector('select').disabled = r.value === 'admin'; }
   r.addEventListener('change', sync); sync();
 });
+// Account page: send the photo as soon as one is chosen.
+document.addEventListener('change', function (e) { if (e.target.matches && e.target.matches('[data-autosubmit-file]') && e.target.files.length) e.target.form.submit(); });

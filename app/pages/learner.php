@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         flash('Saved.');
     } elseif ($do === 'reset') {
         $pw = make_password();
-        q('UPDATE users SET password_hash = ?, must_change = 1, pin_fails = 0 WHERE id = ?', [password_hash($pw, PASSWORD_DEFAULT), $l['id']]);
+        q('UPDATE users SET password_hash = ?, starter_pw = ?, must_change = 1, pin_fails = 0 WHERE id = ?', [password_hash($pw, PASSWORD_DEFAULT), $pw, $l['id']]);
         $_SESSION['new_accounts'][] = [full_name($l), $l['als_id'], $pw, $l['grade']];
         flash('New password made. It is on the sign-in slips page.');
     } elseif ($do === 'pin') {

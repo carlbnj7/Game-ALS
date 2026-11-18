@@ -19,8 +19,8 @@ $cur = $_GET['p'] ?? 'home';
 <link rel="apple-touch-icon" href="assets/img/icons/apple-touch-icon.png?v=3">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="apple-mobile-web-app-title" content="Game ALS">
-<link rel="stylesheet" href="assets/css/app.css?v=17">
-<script src="assets/js/theme.js?v=7"></script>
+<link rel="stylesheet" href="assets/css/app.css?v=18">
+<script src="assets/js/theme.js?v=8"></script>
 </head>
 <body class="<?= e($bodyClass ?? '') ?>" data-csrf="<?= e($_SESSION['csrf'] ?? '') ?>">
 <?php if ($bare): require $view_file; else: ?>
@@ -44,7 +44,7 @@ $cur = $_GET['p'] ?? 'home';
       <a class="brand sm" href="<?= url('home') ?>"><img class="mark" src="assets/img/logo.svg" alt="" width="32" height="35"><b>Game <i>ALS</i></b></a>
       <div class="top-title"><?= e($title ?? '') ?></div>
       <button type="button" class="icon-btn" data-theme-toggle aria-label="Switch light or dark"><?= icon('moon', 18) ?></button>
-      <div class="who"><span class="av"><?= e(mb_strtoupper(mb_substr($u['first_name'] ?? '?', 0, 1))) ?></span><span class="who-t"><b><?= e(full_name($u)) ?></b><small><?= e(ucfirst($u['role'])) ?></small></span></div>
+      <div class="who"><a href="<?= url('account') ?>" class="who-av" aria-label="My account"><?= avatar_html($u) ?></a><span class="who-t"><b><?= e(full_name($u)) ?></b><small><?= e(ucfirst($u['role'])) ?></small></span></div>
     </header>
     <main class="content">
       <?php foreach (flash() as [$t, $m]): ?><div class="flash <?= e($t) ?>"><?= e($m) ?></div><?php endforeach; ?>

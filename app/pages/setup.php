@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     elseif ($needPin && !pin_ok($p1)) $err = 'Your PIN must be 4 numbers. Do not use 0000, 1111 or 1234.';
     elseif ($needPin && $p1 !== $p2) $err = 'The two PINs are not the same.';
     else {
-        if ($needPw) q('UPDATE users SET password_hash = ?, must_change = 0 WHERE id = ?', [password_hash($n1, PASSWORD_DEFAULT), $u['id']]);
+        if ($needPw) q('UPDATE users SET password_hash = ?, starter_pw = NULL, must_change = 0 WHERE id = ?', [password_hash($n1, PASSWORD_DEFAULT), $u['id']]);
         if ($needPin) q('UPDATE users SET username = ?, pin_hash = ?, pin_fails = 0, setup_done = 1 WHERE id = ?', [$un, password_hash($p1, PASSWORD_DEFAULT), $u['id']]);
         session_regenerate_id(true);
         flash('All set! Sign in next time with your username ' . ($needPin ? $un : $u['username']) . ' or your ALS ID ' . $u['als_id'] . '.');

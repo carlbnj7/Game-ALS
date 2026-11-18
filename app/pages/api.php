@@ -11,6 +11,7 @@ $s = (string)($in['s'] ?? ''); $l = (int)($in['l'] ?? 0); $a = (int)($in['a'] ??
 if (!isset(STRANDS[$s]) || $l < 1 || $l > 3 || $a < 1 || $a > 3) out(['error' => 'Bad activity.'], 400);
 $uid = (int)$u['id'];
 if (!level_open(progress_map($uid), $s, $l)) out(['error' => 'This level is still locked.'], 403);
+if (!activity_open(progress_map($uid), $s, $l, $a, $u['grade'] ?: 'ELEM')) out(['error' => 'Pass Activity ' . ($a - 1) . ' first.'], 403);
 
 $meta = ['strand' => STRANDS[$s][0] . ' ' . STRANDS[$s][1], 'level' => $l, 'levelName' => LEVELS[$l], 'activity' => $a];
 

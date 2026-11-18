@@ -222,15 +222,15 @@ function renumber_ids_once(): void {
 /** Add a learner. Returns [ALS ID, starter password]. */
 function add_learner(array $by, array $d): array {
     $pw = make_password();
-    q('INSERT INTO users (role, username, password_hash, first_name, middle_name, last_name, sex, birthdate, lrn, grade, clc_id, created_by) VALUES ("learner", ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-      ['new-' . bin2hex(random_bytes(8)), password_hash($pw, PASSWORD_DEFAULT), $d['first_name'], $d['middle_name'] ?? '', $d['last_name'], $d['sex'] ?? '', $d['birthdate'] ?: null, $d['lrn'] ?? '', $d['grade'], $d['clc_id'], $by['id']]);
+    q('INSERT INTO users (role, username, password_hash, starter_pw, first_name, middle_name, last_name, sex, birthdate, lrn, grade, clc_id, created_by) VALUES ("learner", ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      ['new-' . bin2hex(random_bytes(8)), password_hash($pw, PASSWORD_DEFAULT), $pw, $d['first_name'], $d['middle_name'] ?? '', $d['last_name'], $d['sex'] ?? '', $d['birthdate'] ?: null, $d['lrn'] ?? '', $d['grade'], $d['clc_id'], $by['id']]);
     return [assign_als_id((int)db()->lastInsertId(), 'learner'), $pw];
 }
 /** Add a teacher or admin. Returns [id, ALS ID, starter password]. */
 function add_staff(array $by, string $role, array $d): array {
     $pw = make_password();
-    q('INSERT INTO users (role, username, password_hash, first_name, middle_name, last_name, email, created_by) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-      [$role, 'new-' . bin2hex(random_bytes(8)), password_hash($pw, PASSWORD_DEFAULT), $d['first_name'], $d['middle_name'] ?? '', $d['last_name'], $d['email'] ?? '', $by['id']]);
+    q('INSERT INTO users (role, username, password_hash, starter_pw, first_name, middle_name, last_name, email, created_by) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      [$role, 'new-' . bin2hex(random_bytes(8)), password_hash($pw, PASSWORD_DEFAULT), $pw, $d['first_name'], $d['middle_name'] ?? '', $d['last_name'], $d['email'] ?? '', $by['id']]);
     $id = (int)db()->lastInsertId();
     return [$id, assign_als_id($id, $role), $pw];
 }
@@ -271,3 +271,35 @@ function sync_clc_places(): void {
        SET c.municipality = COALESCE(m.name, ""), c.district = COALESCE(d.name, "")');
 }
 function proper(string $s): string { return mb_convert_case(mb_strtolower(trim(preg_replace('/\s+/', ' ', $s))), MB_CASE_TITLE, 'UTF-8'); }
+
+// ---------- profile pictures ----------
+const AVATAR_PRESETS = 8;
+/** Profile picture as <img>, or the first letter of the name when there is none. $cls: '', 'big', 'huge'. */
+function avatar_html(array $u, string $cls = ''): string {
+    $a = (string)($u['avatar'] ?? '');
+    $src = '';
+    if (preg_match('/^preset:a([1-9])$/', $a, $m) && (int)$m[1] <= AVATAR_PRESETS) $src = 'assets/img/avatars/a' . $m[1] . '.svg';
+    elseif (preg_match('/^upload:([a-z0-9-]+\.jpg)$/', $a, $m) && is_file(ROOT . '/uploads/avatars/' . $m[1])) $src = 'uploads/avatars/' . $m[1];
+    if ($src) return '<img class="av av-img ' . e($cls) . '" src="' . e($src) . '" alt="" width="64" height="64">';
+    return '<span class="av ' . e($cls) . '">' . e(mb_strtoupper(mb_substr((string)($u['first_name'] ?? '?'), 0, 1))) . '</span>';
+}
+/** Save an uploaded photo as a 256x256 JPEG (re-drawn, so nothing else from the file is kept). Returns the file name or an error. */
+function save_avatar_upload(array $f, int $uid): array {
+    if (($f['error'] ?? 1) !== UPLOAD_ERR_OK) return [null, 'The picture did not upload. Try again.'];
+    if ($f['size'] > 4 * 1024 * 1024) return [null, 'The picture is too big. Use one under 4 MB.'];
+    $info = @getimagesize($f['tmp_name']);
+    $type = $info[2] ?? 0;
+    $src = $type === IMAGETYPE_JPEG ? @imagecreatefromjpeg($f['tmp_name']) : ($type === IMAGETYPE_PNG ? @imagecreatefrompng($f['tmp_name']) : ($type === IMAGETYPE_WEBP && function_exists('imagecreatefromwebp') ? @imagecreatefromwebp($f['tmp_name']) : null));
+    if (!$src) return [null, 'Use a JPG, PNG or WEBP picture.'];
+    $w = imagesx($src); $h = imagesy($src); $s = min($w, $h);
+    $out = imagecreatetruecolor(256, 256);
+    imagefill($out, 0, 0, imagecolorallocate($out, 255, 255, 255));
+    imagecopyresampled($out, $src, 0, 0, (int)(($w - $s) / 2), (int)(($h - $s) / 2), 256, 256, $s, $s);
+    $name = 'u' . $uid . '-' . bin2hex(random_bytes(6)) . '.jpg';
+    if (!is_dir(ROOT . '/uploads/avatars')) @mkdir(ROOT . '/uploads/avatars', 0755, true);
+    if (!imagejpeg($out, ROOT . '/uploads/avatars/' . $name, 86)) return [null, 'The picture could not be saved. Ask the admin to check the uploads folder.'];
+    return [$name, ''];
+}
+function remove_old_avatar(?string $a): void {
+    if ($a && preg_match('/^upload:([a-z0-9-]+\.jpg)$/', $a, $m)) @unlink(ROOT . '/uploads/avatars/' . $m[1]);
+}

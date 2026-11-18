@@ -14,7 +14,7 @@
         <?php elseif (!$open): ?><span class="chip"><?= icon('lock', 13) ?> Pass all of Level 1 to open</span><?php endif; ?>
       </header>
       <div class="acts">
-      <?php for ($a = 1; $a <= 3; $a++): $p = $pm["$s|$l|$a"] ?? null; $n = $counts["$l|$a"] ?? 0; $k = "$l|$a"; ?>
+      <?php for ($a = 1; $a <= 3; $a++): $p = $pm["$s|$l|$a"] ?? null; $n = $counts["$l|$a"] ?? 0; $k = "$l|$a"; $ao = $open && activity_open($pm, $s, $l, $a, me()['grade'] ?: 'ELEM'); ?>
         <div class="act <?= !empty($p['passed']) ? 'passed' : '' ?>">
           <div class="act-t"><b>Activity <?= $a ?></b><small>Items <?= activity_range($a) ?> · <?= $n ?> questions</small></div>
           <div class="act-score">
@@ -23,6 +23,8 @@
           </div>
           <?php if (!$open || !$n): ?>
             <span class="btn ghost disabled"><?= icon('lock', 15) ?> <?= $n ? 'Locked' : 'Soon' ?></span>
+          <?php elseif (!$ao): ?>
+            <span class="btn ghost disabled" title="Pass Activity <?= $a - 1 ?> first"><?= icon('lock', 15) ?> Pass Activity <?= $a - 1 ?> first</span>
           <?php elseif (isset($playing[$k])): ?>
             <a class="btn primary" href="<?= url('play', ['s' => $s, 'l' => $l, 'a' => $a]) ?>"><?= icon('play', 15) ?> Resume <?= $playing[$k] + 1 ?>/<?= $n ?></a>
           <?php else: ?>
