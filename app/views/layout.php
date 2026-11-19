@@ -19,7 +19,7 @@ $cur = $_GET['p'] ?? 'home';
 <link rel="apple-touch-icon" href="assets/img/icons/apple-touch-icon.png?v=3">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="apple-mobile-web-app-title" content="Game ALS">
-<link rel="stylesheet" href="assets/css/app.css?v=18">
+<link rel="stylesheet" href="assets/css/app.css?v=19">
 <script src="assets/js/theme.js?v=8"></script>
 </head>
 <body class="<?= e($bodyClass ?? '') ?>" data-csrf="<?= e($_SESSION['csrf'] ?? '') ?>">
@@ -54,6 +54,6 @@ $cur = $_GET['p'] ?? 'home';
   <div class="menu-shade" data-menu-close></div>
 </div>
 <?php endif; ?>
-<?php foreach ($scripts ?? [] as $js): ?><script src="assets/js/<?= e($js) ?>?v=6"></script><?php endforeach; ?>
+<?php foreach ($scripts ?? [] as $js): ?><script src="assets/js/<?= e($js) ?>?v=7"></script><?php endforeach; ?>
 </body>
 </html>

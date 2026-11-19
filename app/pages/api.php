@@ -74,8 +74,9 @@ if ($do === 'answer') {
         $resp['result']['correct'] = (int)$at['correct']; $resp['result']['total'] = count($ids);
         $resp['result']['bestStreak'] = (int)$at['best_streak'];
         $resp['result']['certs'] = array_map(fn($c) => $c[0] === 'readiness' ? 'Certificate of Readiness' : 'Certificate of Passing · ' . STRANDS[$c[1]][0] . ' ' . STRANDS[$c[1]][1] . ' Level ' . $c[2], $certs);
-        $resp['result']['nextUrl'] = $a < 3 ? url('play', ['s' => $s, 'l' => $l, 'a' => $a + 1]) : url('strand', ['s' => $s]);
-        $resp['result']['nextLabel'] = $a < 3 ? 'Next activity' : 'Back to levels';
+        $nx = next_activity(progress_map($uid));
+        if ($nx) { $resp['result']['nextUrl'] = url('play', ['s' => $nx[0], 'l' => $nx[1], 'a' => $nx[2]]); $resp['result']['nextLabel'] = $nx[0] === $s && $nx[1] === $l ? 'Next activity' : 'Next: ' . STRANDS[$nx[0]][0] . ' ' . STRANDS[$nx[0]][1] . ' Level ' . $nx[1]; }
+        else { $resp['result']['nextUrl'] = url('home'); $resp['result']['nextLabel'] = 'Back to home'; }
     }
     out($resp);
 }

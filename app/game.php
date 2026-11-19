@@ -20,22 +20,34 @@ function strand_done(array $pm, string $s): bool {
     for ($l = 1; $l <= 3; $l++) if (!level_done($pm, $s, $l)) return false;
     return true;
 }
-/** Strands go in order (LS1 English, LS1 Filipino, LS2 … LS6). A strand opens only after
- *  every activity of the strand before it is passed with 75% or more. */
-function strand_open(array $pm, string $s): bool {
-    foreach (STRANDS as $code => $_) {
-        if ($code === $s) return true;
-        if (!strand_done($pm, $code)) return false;
+/** Play order goes by level across all strands:
+ *  Level 1 of LS1 English, Level 1 of LS1 Filipino, Level 1 of LS2 … LS6, then Level 2 of every strand, then Level 3.
+ *  A level opens only when every level before it in that order is passed (all 3 activities, 75% or more). */
+function level_blocker(array $pm, string $s, int $l): ?array {
+    for ($ll = 1; $ll <= $l; $ll++) foreach (STRANDS as $code => $_) {
+        if ($ll === $l && $code === $s) return null;
+        if (!level_done($pm, $code, $ll)) return [$code, $ll];
     }
-    return false;
+    return null;
+}
+function level_lock_text(array $pm, string $s, int $l): string {
+    $b = level_blocker($pm, $s, $l);
+    return $b ? 'Pass ' . STRANDS[$b[0]][0] . ' ' . STRANDS[$b[0]][1] . ' Level ' . $b[1] . ' first' : '';
+}
+/** A strand can be opened once its Level 1 is open. */
+function strand_open(array $pm, string $s): bool { return level_open($pm, $s, 1); }
+/** The next activity to play, in play order, or null when everything is passed. */
+function next_activity(array $pm): ?array {
+    for ($l = 1; $l <= 3; $l++) foreach (STRANDS as $s => $_) for ($a = 1; $a <= 3; $a++)
+        if (empty($pm["$s|$l|$a"]['passed'])) return [$s, $l, $a];
+    return null;
 }
 function previous_strand(string $s): ?string {
     $prev = null;
     foreach (STRANDS as $code => $_) { if ($code === $s) return $prev; $prev = $code; }
     return null;
 }
-/** Levels 2 and 3 open only after all of Level 1 is passed (and the strand itself is open). */
-function level_open(array $pm, string $s, int $l): bool { return strand_open($pm, $s) && ($l === 1 || level_done($pm, $s, 1)); }
+function level_open(array $pm, string $s, int $l): bool { return level_blocker($pm, $s, $l) === null; }
 /** Inside a level, activities go in order: Activity 2 opens after Activity 1 is passed (75%), Activity 3 after Activity 2.
  *  An activity with no questions yet does not block the next one. */
 function activity_open(array $pm, string $s, int $l, int $a, string $grade = 'ELEM'): bool {

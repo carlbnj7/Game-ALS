@@ -10,13 +10,13 @@
   <div class="stat s-red"><?= icon('award', 40) ?><b><?= $certs ?></b><span>Certificates</span></div>
 </div>
 
-<div class="sec-row"><h2 class="sec">Learning Strands</h2><span class="muted small">Finish each strand with 75% or more to open the next.</span></div>
+<div class="sec-row"><h2 class="sec">Learning Strands</h2><span class="muted small">Pass Level 1 of every strand first, then Level 2, then Level 3 (75% or more).</span></div>
 <div class="tiles-grid">
 <?php $first = true; foreach (STRANDS as $code => [$ls, $short, $name, $col, $ic]):
     $open = strand_open($pm, $code); $done = strand_done_count($pm, $code); $C = 2 * M_PI * 15;
-    $isNext = $open && $first && !strand_done($pm, $code); if ($isNext) $first = false;
+    $isNext = $next && $next[0] === $code;
     $href = $open ? url('strand', ['s' => $code]) : null;
-    $pv = previous_strand($code); ?>
+    $lockText = $open ? '' : level_lock_text($pm, $code, 1); ?>
   <<?= $href ? 'a href="' . e($href) . '"' : 'div' ?> class="stile c-<?= e(strtolower($code)) ?> <?= $isNext ? 'wide' : '' ?> <?= $open ? '' : 'locked' ?>">
     <span class="glow"></span>
     <?= strand_art($ic) ?>
@@ -33,7 +33,7 @@
         <span class="<?= $ld ? 'done' : ($lo ? 'open' : '') ?>"><?= $ld ? icon('check', 10) : ($lo ? '' : icon('lock', 9)) ?>L<?= $l ?></span>
       <?php endfor; ?>
     </div>
-    <?php if (!$open): ?><span class="lock-note"><?= icon('lock', 13) ?> Pass <?= e(STRANDS[$pv][0] . ' ' . STRANDS[$pv][1]) ?> first</span><?php endif; ?>
+    <?php if (!$open): ?><span class="lock-note"><?= icon('lock', 13) ?> <?= e($lockText) ?></span><?php endif; ?>
     <?php if (empty($counts[$code])): ?><span class="soon">Questions coming soon</span><?php endif; ?>
   </<?= $href ? 'a' : 'div' ?>>
 <?php endforeach; ?>

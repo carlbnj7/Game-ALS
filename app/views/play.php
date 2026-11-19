@@ -41,6 +41,24 @@
     </div>
   </div>
 
+
+  <?php $nItems = count(activity_items(me()['grade'] ?: 'ELEM', $s, $l, $a)); $need = (int)ceil($nItems * PASS_MARK); $secsSet = (int)setting('item_seconds', '60'); ?>
+  <div class="mech" id="mech" role="dialog" aria-modal="true" aria-labelledby="mechTitle">
+    <div class="mech-in">
+      <button type="button" class="icon-btn mech-x" id="mechX" aria-label="Close"><?= icon('x', 18) ?></button>
+      <small class="c-text-<?= e(strtolower($s)) ?>"><?= e(STRANDS[$s][0] . ' ' . mb_strtoupper(STRANDS[$s][1])) ?> · LEVEL <?= (int)$l ?> · ACTIVITY <?= (int)$a ?></small>
+      <h2 id="mechTitle">How to play</h2>
+      <ul class="mech-list">
+        <li><span class="mi"><?= icon('list', 18) ?></span><div><b><?= $nItems ?> questions</b><p>Read each question, pick one answer, then press Check answer.</p></div></li>
+        <li><span class="mi ok"><?= icon('check', 18) ?></span><div><b>Get <?= $need ?> or more right (75%)</b><p>That passes this activity and opens the next one. Below 75%, you answer this activity again.</p></div></li>
+        <li><span class="mi bad"><?= icon('heart', 18) ?></span><div><b><?= START_LIVES ?> lives</b><p>A wrong answer takes one life. <?= STREAK_FOR_LIFE ?> right in a row gives one back (up to <?= MAX_LIVES ?>). No lives left means start over.</p></div></li>
+        <li><span class="mi warn"><?= icon('bulb', 18) ?></span><div><b><?= HINTS_PER_ACTIVITY ?> hints</b><p>A hint takes away two wrong choices.</p></div></li>
+        <?php if ($secsSet > 0): ?><li><span class="mi"><?= icon('flame', 18) ?></span><div><b><?= $secsSet ?> seconds per question</b><p>When time runs out, the question counts as wrong.</p></div></li><?php endif; ?>
+      </ul>
+      <button type="button" class="btn primary big grow" id="mechGo"><?= icon('play', 16) ?> I'm ready</button>
+    </div>
+  </div>
+
   <div class="toast" id="toast" hidden></div>
 
   <section class="result" id="result" hidden>

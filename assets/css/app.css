@@ -620,3 +620,17 @@ body.auth{align-items:safe center}
 .av-choice img{width:100%;height:100%;border-radius:50%}.av-choice:hover{transform:scale(1.06)}.av-choice.on{border-color:var(--brand2);box-shadow:0 0 0 3px var(--chip)}
 .av-upload{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:6px}.av-upload label{cursor:pointer}
 .pass-name{display:flex;align-items:center;gap:8px}.pass-name .av{width:30px;height:30px;font-size:13px}
+
+/* How to play popup (before every activity) */
+.mech{position:fixed;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(2,6,23,.45);animation:fade .15s}
+.mech[hidden]{display:none}
+.mech-in{position:relative;width:100%;max-width:480px;max-height:calc(100vh - 32px);overflow:auto;padding:22px 20px 18px;border-radius:22px;background:var(--card);border-top:4px solid var(--brand);box-shadow:0 20px 50px rgba(15,23,42,.3);display:flex;flex-direction:column;gap:12px;animation:up .22s ease-out}
+.mech-in small{font-weight:700;letter-spacing:.06em;font-size:.72rem}
+.mech-in h2{margin:0;font-size:1.35rem}
+.mech-x{position:absolute;top:12px;right:12px}
+.mech-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.mech-list li{display:flex;gap:12px;align-items:flex-start}
+.mech-list b{display:block;font-size:.95rem}
+.mech-list p{margin:2px 0 0;font-size:.85rem;color:var(--sub)}
+.mi{flex:none;width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:rgba(43,74,203,.12);color:#2b4acb}
+.mi.ok{background:rgba(22,163,74,.13);color:var(--ok)}.mi.bad{background:rgba(220,38,38,.12);color:var(--bad)}.mi.warn{background:rgba(217,142,4,.15);color:#b77400}

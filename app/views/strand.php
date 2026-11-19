@@ -11,7 +11,7 @@
     <div class="station-body">
       <header><h2>Level <?= $l ?> <span class="muted">· <?= LEVELS[$l] ?></span></h2>
         <?php if ($ld): ?><a class="chip ok" href="<?= url('certs') ?>"><?= icon('award', 14) ?> Certificate earned</a>
-        <?php elseif (!$open): ?><span class="chip"><?= icon('lock', 13) ?> Pass all of Level 1 to open</span><?php endif; ?>
+        <?php elseif (!$open): ?><span class="chip"><?= icon('lock', 13) ?> <?= e(level_lock_text($pm, $s, $l)) ?></span><?php endif; ?>
       </header>
       <div class="acts">
       <?php for ($a = 1; $a <= 3; $a++): $p = $pm["$s|$l|$a"] ?? null; $n = $counts["$l|$a"] ?? 0; $k = "$l|$a"; $ao = $open && activity_open($pm, $s, $l, $a, me()['grade'] ?: 'ELEM'); ?>

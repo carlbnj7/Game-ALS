@@ -8,7 +8,7 @@ if ($u['role'] === 'learner') {
     $playing = one('SELECT * FROM attempts WHERE user_id = ? AND status = "playing" ORDER BY id DESC LIMIT 1', [$u['id']]);
     // next thing to do: first open, not passed activity
     $next = null;
-    foreach (STRANDS as $s => $_) { if (!strand_open($pm, $s)) break; for ($l = 1; $l <= 3 && !$next; $l++) { if (!level_open($pm, $s, $l)) break; for ($a = 1; $a <= 3; $a++) if (empty($pm["$s|$l|$a"]['passed'])) { $next = [$s, $l, $a]; break; } } if ($next) break; }
+    $next = next_activity($pm);
     render('learner_home', [
         'title' => 'Home', 'pm' => $pm, 'counts' => $counts, 'playing' => $playing, 'next' => $next,
         'points' => points_of((int)$u['id']),

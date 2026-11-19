@@ -242,6 +242,7 @@
   });
   $('zoom').addEventListener('click', function (e) { if (e.target.id !== 'zoomImg') $('zoom').hidden = true; });
   document.addEventListener('keydown', function (e) {
+    if (!begun) return;
     if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
     if (!$('zoom').hidden && e.key === 'Escape') { $('zoom').hidden = true; return; }
     if (!$('sheet').hidden) { if (e.key === 'Enter') { e.preventDefault(); $('nextBtn').click(); } return; }
@@ -250,5 +251,9 @@
     if (['A', 'B', 'C', 'D'].indexOf(k) >= 0 && st && st.item && !$('qcard').hidden) choose(k);
     else if (e.key === 'Enter' && pick && !answered) { e.preventDefault(); check(); }
   });
-  api({ do: 'state' }).then(load);
+  // Show how to play first; the activity (and its timer) starts when the popup is closed.
+  var mech = $('mech'), begun = false;
+  function begin() { if (begun) return; begun = true; mech.hidden = true; api({ do: 'state' }).then(load); }
+  if (mech) { $('mechGo').addEventListener('click', begin); $('mechX').addEventListener('click', begin); document.addEventListener('keydown', function (e) { if (!begun && e.key === 'Escape') begin(); }); $('mechGo').focus(); }
+  else begin();
 })();
